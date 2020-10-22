@@ -36,6 +36,7 @@ while (difficoltaScelta != sceltaA && difficoltaScelta != sceltaB && difficoltaS
     alert('Input non valido, riprovare..');
     difficoltaScelta = parseInt(prompt('Scegli un livello di difficoltà tra 0 e 2 compresi'));
 }
+console.log('Livello scelto: ' + difficoltaScelta);
 
 // trasformo il livello scelto dall'utente nel numero di scelte possibili
 var rangeNumeriLivello;
@@ -56,8 +57,11 @@ var rangePosizioniLibere = rangeNumeriLivello - numeroMine;
 var posizioneMine = [];
 for (var i = 0; i < numeroMine; i++) {
     var numeriRandom = Math.floor(Math.random() * 100) + 1;
-    posizioneMine.push(numeriRandom);
+    if (!posizioneMine.includes(numeriRandom)){
+        posizioneMine.push(numeriRandom);
+    }
 }
+console.log('Posizione mine: ');
 console.log(posizioneMine);
 
 // chiedo a l'utente di inserire un numero compreso tra 1 e il limite superiore
@@ -90,7 +94,7 @@ do {
 } while ((posizioniSafe.length < rangePosizioniLibere) && (arbitro == false));
 
 // comunico il risultato all'utente
-console.log('Sei riuscito a inserire n.' + posizioniSafe.length + ' numeri:');
+console.log('Sei riuscito a inserire n. numeri:');
 console.log(posizioniSafe);
 
 // calcolo lo score dell'utente e lo comunico
