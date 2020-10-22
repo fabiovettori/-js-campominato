@@ -80,6 +80,8 @@ do {
     if (posizioneMine.includes(userInput)) {
         alert('Hai preso una mina, hai perso :(');
         arbitro = true;
+    } else if (posizioniSafe.includes(userInput)) {
+        alert('Inserire un numero differente tra quelli già inseriti: ' + posizioniSafe);
     } else {
         posizioniSafe.push(userInput);
         // console.log(posizioniSafe);
@@ -88,7 +90,8 @@ do {
 } while ((posizioniSafe.length < rangePosizioniLibere) && (arbitro == false));
 
 // comunico il risultato all'utente
-console.log('Sei riuscito a inserire n.' + posizioniSafe.length + ' numeri');
+console.log('Sei riuscito a inserire n.' + posizioniSafe.length + ' numeri:');
+console.log(posizioniSafe);
 
 // calcolo lo score dell'utente e lo comunico
 var score = Math.round((100 * posizioniSafe.length) / rangePosizioniLibere);
