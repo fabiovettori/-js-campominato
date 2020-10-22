@@ -23,8 +23,19 @@ console.log(posizioneMine);
 
 // chiedo a l'utente di inserire un numero compreso tra 1 e 100
 var userInput = parseInt(prompt('Inserisci un numero compreso tra 1 e 100'));
+var posizioniSafe = [];
+
+
 while (isNaN(userInput) || userInput < 0 || userInput > 100 ) {
     alert('Input non valido');
     userInput = parseInt(prompt('Inserisci un numero compreso tra 1 e 100'));
 }
-console.log(userInput);
+// console.log(userInput);
+
+// verifico che l'utente non sia caduto su una mina
+if (posizioneMine.includes(userInput)) {
+    alert('Hai preso una mina, hai perso :(')
+} else {
+    posizioniSafe.push(userInput);
+    console.log(posizioniSafe);
+}
