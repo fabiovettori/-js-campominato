@@ -22,20 +22,35 @@ for (var i = 0; i < 16; i++) {
 console.log(posizioneMine);
 
 // chiedo a l'utente di inserire un numero compreso tra 1 e 100
-var userInput = parseInt(prompt('Inserisci un numero compreso tra 1 e 100'));
+var userInput;
 var posizioniSafe = [];
 
-
-while (isNaN(userInput) || userInput < 0 || userInput > 100 ) {
-    alert('Input non valido');
+// devo ripetere questo ciclo di richiesta numeri all'utente fintantochè:
+// - l'utente non cade su una mina;
+// - l'utente non inserisce il numero massimo di lanci, ovvero 100 - 16 = 84
+// (che corrisponderà alla lunghezza massima di posizioniSafe.length)
+var arbitro = false;
+do {
     userInput = parseInt(prompt('Inserisci un numero compreso tra 1 e 100'));
-}
-// console.log(userInput);
 
-// verifico che l'utente non sia caduto su una mina
-if (posizioneMine.includes(userInput)) {
-    alert('Hai preso una mina, hai perso :(')
-} else {
-    posizioniSafe.push(userInput);
-    console.log(posizioniSafe);
-}
+    while (isNaN(userInput) || userInput < 0 || userInput > 100) {
+        alert('Input non valido, riprovare..');
+        userInput = parseInt(prompt('Inserisci un numero compreso tra 1 e 100'));
+    }
+        // verifico che l'utente non sia caduto su una mina
+    if (posizioneMine.includes(userInput)) {
+        alert('Hai preso una mina, hai perso :(');
+        arbitro = true;
+    } else {
+        posizioniSafe.push(userInput);
+        console.log(posizioniSafe);
+    }
+
+} while ((posizioniSafe.length < 84) && (arbitro == false));
+
+// comunico il risultato all'utente
+console.log('Sei riuscito a inserire n.' + posizioniSafe.length + ' numeri');
+
+// calcolo lo score dell'utente e lo comunico
+var score = Math.round((100 * posizioniSafe.length) / 84);
+console.log('Hai ottenuto uno score del: ' + score + '%');
