@@ -13,29 +13,68 @@
 // In ogni caso, le mine sono sempre 16.
 
 
-// faccio generare 16 numeri al programma compresi tra 1 e 100
+// SETTAGGI DEI PARAMETRI FONDAMENTALI DEL GIOCO
+// settaggio numero mine
+var numeroMine = 16;
+
+// settaggio dei livelli
+var livello_0 = 100;
+var livello_1 = 80;
+var livello_2 = 50;
+
+// settaggio delle scelte corrispondenti ai livelli
+var sceltaA = 0;
+var sceltaB = 1;
+var sceltaC = 2;
+
+
+// SVILUPPO
+// ---INPUT RICHIESTI DALL'UTENTE
+var difficoltaScelta = parseInt(prompt('Scegli un livello di difficoltà tra 0 e 2 compresi'));
+
+while (difficoltaScelta != sceltaA && difficoltaScelta != sceltaB && difficoltaScelta != sceltaC) {
+    alert('Input non valido, riprovare..');
+    difficoltaScelta = parseInt(prompt('Scegli un livello di difficoltà tra 0 e 2 compresi'));
+}
+
+// trasformo il livello scelto dall'utente nel numero di scelte possibili
+var rangeNumeriLivello;
+if (difficoltaScelta == sceltaA) {
+    rangeNumeriLivello = livello_0;
+} else if (difficoltaScelta == sceltaB){
+    rangeNumeriLivello = livello_1;
+} else {
+    rangeNumeriLivello = livello_2;
+}
+
+// trasformo il livello scelto dall'utente nel range di tentativi possibili
+var rangePosizioniLibere = rangeNumeriLivello - numeroMine;
+
+
+// ---ANALISI DEI DATI INSERITI
+// faccio generare 16 numeri al programma compresi tra 1 e il limite massimo dipendente dal livllo scelto
 var posizioneMine = [];
-for (var i = 0; i < 16; i++) {
+for (var i = 0; i < numeroMine; i++) {
     var numeriRandom = Math.floor(Math.random() * 100) + 1;
     posizioneMine.push(numeriRandom);
 }
 console.log(posizioneMine);
 
-// chiedo a l'utente di inserire un numero compreso tra 1 e 100
+// chiedo a l'utente di inserire un numero compreso tra 1 e il limite superiore
 var userInput;
 var posizioniSafe = [];
 
 // devo ripetere questo ciclo di richiesta numeri all'utente fintantochè:
 // - l'utente non cade su una mina;
-// - l'utente non inserisce il numero massimo di lanci, ovvero 100 - 16 = 84
+// - l'utente non inserisce il numero massimo di lanci
 // (che corrisponderà alla lunghezza massima di posizioniSafe.length)
 var arbitro = false;
 do {
-    userInput = parseInt(prompt('Inserisci un numero compreso tra 1 e 100'));
+    userInput = parseInt(prompt('Inserisci un numero compreso tra 1 e ' + rangeNumeriLivello));
 
-    while (isNaN(userInput) || userInput < 0 || userInput > 100) {
+    while (isNaN(userInput) || userInput < 0 || userInput > rangeNumeriLivello) {
         alert('Input non valido, riprovare..');
-        userInput = parseInt(prompt('Inserisci un numero compreso tra 1 e 100'));
+        userInput = parseInt(prompt('Inserisci un numero compreso tra 1 e ' + rangeNumeriLivello));
     }
         // verifico che l'utente non sia caduto su una mina
     if (posizioneMine.includes(userInput)) {
@@ -43,14 +82,14 @@ do {
         arbitro = true;
     } else {
         posizioniSafe.push(userInput);
-        console.log(posizioniSafe);
+        // console.log(posizioniSafe);
     }
 
-} while ((posizioniSafe.length < 84) && (arbitro == false));
+} while ((posizioniSafe.length < rangePosizioniLibere) && (arbitro == false));
 
 // comunico il risultato all'utente
 console.log('Sei riuscito a inserire n.' + posizioniSafe.length + ' numeri');
 
 // calcolo lo score dell'utente e lo comunico
-var score = Math.round((100 * posizioniSafe.length) / 84);
+var score = Math.round((100 * posizioniSafe.length) / rangePosizioniLibere);
 console.log('Hai ottenuto uno score del: ' + score + '%');
