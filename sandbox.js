@@ -55,10 +55,10 @@ var rangePosizioniLibere = rangeNumeriLivello - numeroMine;
 // ---ANALISI DEI DATI INSERITI
 // faccio generare 16 numeri al programma compresi tra 1 e il limite massimo dipendente dal livllo scelto
 var posizioneMine = [];
-while (posizioneMine < numeroMine) {
-    var numeriRandom = Math.floor(Math.random() * rangeNumeriLivello) + 1;
-    if (!posizioneMine.includes(numeriRandom)){
-        posizioneMine.push(numeriRandom);
+while (posizioneMine.length < numeroMine) {
+    var numeroRandom = Math.floor(Math.random() * rangeNumeriLivello) + 1;
+    if (!posizioneMine.includes(numeroRandom)){
+        posizioneMine.push(numeroRandom);
     }
 }
 console.log('Posizione mine: ');
@@ -82,7 +82,6 @@ do {
     }
         // verifico che l'utente non sia caduto su una mina
     if (posizioneMine.includes(userInput)) {
-        alert('Hai preso una mina, hai perso :(');
         arbitro = true;
     } else if (posizioniSafe.includes(userInput)) {
         alert('Inserire un numero differente tra quelli già inseriti: ' + posizioniSafe);
@@ -93,10 +92,18 @@ do {
 
 } while ((posizioniSafe.length < rangePosizioniLibere) && (arbitro == false));
 
+
+// ---RISULTATI GIOCO
 // comunico il risultato all'utente
+if (!arbitro) {
+    alert('Hai vinto :)');
+    console.log('Hai vinto!');
+} else {
+    alert('Hai preso una mina, hai perso :(');
+    console.log('Hai perso!');
+}
 console.log('Sei riuscito a inserire n. numeri:');
 console.log(posizioniSafe);
 
-// calcolo lo score dell'utente e lo comunico
 var score = Math.round((100 * posizioniSafe.length) / rangePosizioniLibere);
 console.log('Hai ottenuto uno score del: ' + score + '%');
