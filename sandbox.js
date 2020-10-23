@@ -55,8 +55,8 @@ var rangePosizioniLibere = rangeNumeriLivello - numeroMine;
 // ---ANALISI DEI DATI INSERITI
 // faccio generare 16 numeri al programma compresi tra 1 e il limite massimo dipendente dal livllo scelto
 var posizioneMine = [];
-for (var i = 0; i < numeroMine; i++) {
-    var numeriRandom = Math.floor(Math.random() * 100) + 1;
+while (posizioneMine < numeroMine) {
+    var numeriRandom = Math.floor(Math.random() * rangeNumeriLivello) + 1;
     if (!posizioneMine.includes(numeriRandom)){
         posizioneMine.push(numeriRandom);
     }
